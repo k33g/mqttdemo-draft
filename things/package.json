@@ -1,0 +1,13 @@
+{
+  "name": "mqttdemo",
+  "description": "mqttdemo for DevoxxFR 2015",
+  "author": "dreamTeam: @lhuet35 and @k33g_org",
+  "license": "MIT",
+  "dependencies": {
+    "cylon": "^0.22.0",
+    "cylon-leapmotion": "^0.17.0",
+    "cylon-mqtt": "^0.4.0",
+    "cylon-sphero": "^0.18.0",
+    "serialport": "^1.5.0"
+  }
+}

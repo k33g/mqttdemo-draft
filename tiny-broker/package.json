@@ -1,0 +1,13 @@
+{
+  "name": "mqttdemo",
+  "description": "mqttdemo for DevoxxFR 2015",
+  "author": "dreamTeam: @lhuet35 and @k33g_org",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.10.2",
+    "express": "^4.11.1",
+    "mqtt": "^1.1.0",
+    "redis": "^0.12.1",
+    "socket.io": "^1.3.4"
+  }
+}

@@ -1,0 +1,49 @@
+<!--
+  mqtt-text component is available under the terms of the MIT-License.
+  Copyright 2015-2016, Philippe Charrière & Laurent Huet
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+
+
+<polymer-element name="mqtt-text" attributes="titleGraph, topic, client">
+
+    <template>
+        <link rel="stylesheet" type="text/css" href="../materialize/css/materialize.css">
+
+        <core-signals on-core-signal-mqtt-data="{{mqttData}}"></core-signals>
+
+
+        <div class="card-panel white">
+            <span class="card-title grey-text"><h5>{{titleGraph}}</h5></span>
+            <hr>
+            <span class="grey-text">
+                <div class="card-reveal">
+
+                    <span>topic: {{topic}} | client: {{client}}</span>
+                    <p>{{informations}}</p>
+                </div>
+
+            </span>
+        </div>
+
+
+    </template>
+
+
+    <script>
+
+        Polymer("mqtt-text", {
+            ready: function() {},
+            mqttData: function(e, data, sender) {
+                if(data.topic == this.topic && data.client == this.client) {
+
+                    this.informations = data.message;
+                }
+            }
+
+        });
+
+    </script>
+
+</polymer-element>

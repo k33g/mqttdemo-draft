@@ -1,0 +1,9 @@
+.idea/*
+broker/node_modules/*
+things/node_modules/*
+tiny-broker/node_modules/*
+node_modules/*
+broker/public/bower_components/*
+tiny-broker/public/bower_components/*
+broker/dump.rdb
+dump.rdb

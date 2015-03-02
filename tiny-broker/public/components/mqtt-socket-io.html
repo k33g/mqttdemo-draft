@@ -1,0 +1,63 @@
+<!--
+  mqtt-socket-io component is available under the terms of the MIT-License.
+  Copyright 2015-2016, Philippe Charrière & Laurent Huet
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+
+
+<polymer-element name="mqtt-socket-io" attributes="protocol, host, port">
+
+    <template>
+        {{text}}
+    </template>
+
+    <script>
+
+        Polymer("mqtt-socket-io", {
+            //TODO:debug mode to display messages
+            ready: function() {
+                if(this.host=="auto") { this.host = window.location.host.split(':')[0]; }
+                var url = this.protocol + "://" + this.host + ":" +this.port;
+                var socket = io.connect(url);
+
+                var that = this;
+
+                socket.on('connect', function () {
+                    that.text = "socket.io ready on " + url;
+
+                    socket.on("mqtt", function (data) {
+                        that.fire('core-signal', {name: "mqtt-data", data: data});
+                        //console.log({mqttData: data});
+                        //data.topic, data.client, data.message ...
+                    });
+
+                    socket.on('clientConnected', function (data) {
+                        that.fire('core-signal', {name: "client-connected", data: data});
+                        console.log({clientConnected: data});
+                    });
+
+                    socket.on('subscribed', function (data) {
+                        that.fire('core-signal', {name: "subscribed", data: data});
+                        console.log({subscribed: data});
+                    });
+
+                    socket.on('unsubscribed', function (data) {
+                        that.fire('core-signal', {name: "unsubscribed", data: data});
+                        console.log({unsubscribed: data});
+                    });
+
+                    socket.on('clientDisconnected', function (data) {
+                        that.fire('core-signal', {name: "client-disconnected", data: data});
+                        console.log({clientDisconnected: data});
+                    });
+
+                });
+
+            },
+            domReady: function() {}
+        });
+
+    </script>
+
+</polymer-element>

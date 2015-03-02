@@ -1,0 +1,129 @@
+<!--
+  http-things-grid component is available under the terms of the MIT-License.
+  Copyright 2015-2016, Philippe Charrière & Laurent Huet
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+
+
+<polymer-element name="http-things-grid" attributes="urlData, delay, status">
+
+    <template>
+        <link rel="stylesheet" type="text/css" href="../materialize/css/materialize.css">
+
+        <core-ajax
+                id="ajax"
+                auto
+                url="{{urlData}}"
+                handleAs="json"
+                on-core-response="{{handleResponse}}">
+        </core-ajax>
+
+        <table class="responsive-table bordered striped">
+            <thead>
+            <tr>
+                <th>id</th>
+                <!--
+                <th>status</th>
+                <th>kind</th>
+                -->
+                <th>unit</th>
+                <th>remark</th>
+                <!--
+                <th>subscriptions</th>
+                <th>publishOn</th>
+                -->
+            </tr>
+            </thead>
+
+            <tbody>
+            <template repeat="{{thing in things}}">
+                <tr on-click="{{rowSelected}}">
+
+                    <td>{{thing.id}}</td>
+                    <!--
+                    <td>{{thing.status}}</td>
+                    <td>{{thing.informations.kind}} </td>
+                    -->
+                    <td>{{thing.informations.unit}}</td>
+                    <td>{{thing.informations.remark}}</td>
+                    <!--
+                    <td>{{thing.subscriptions}}</td>
+                    <td>{{thing.informations.publishOn}}</td>
+                    -->
+                </tr>
+
+            </template>
+            </tbody>
+        </table>
+
+
+
+    </template>
+
+
+    <script>
+
+        Polymer("http-things-grid", {
+            thingsTable: null,
+            thingsData: [],
+            ready: function() {
+                var that = this;
+
+                setInterval(function(){ that.$.ajax.go(); }, this.delay);
+            },
+            domReady: function() {
+            },
+            handleResponse: function(e, data) {
+                var that = this;
+                this.things = data.response.filter(function(thing){
+                    return thing.status == that.status;
+                });
+            },
+            rowSelected: function(e, detail, sender) {
+                var thing = sender.templateInstance_.model.thing;
+
+                //console.log(thing)
+
+                if(thing.informations.kind=="text") {
+                    var component = [
+                        '<mqtt-text\n',
+                        '  titleGraph="'+thing.informations.remark+' ('+thing.informations.unit+')"\n',
+                        '  topic="'+thing.informations.publishOn+'"\n',
+                        '  client="'+thing.id+'">\n',
+                        '</mqtt-text>'
+                    ].join("");
+                }
+
+                if(thing.informations.kind=="graph") {
+                    var component = [
+                        '<mqtt-graph\n',
+                        '  titleGraph="'+thing.informations.remark+' ('+thing.informations.unit+')"\n',
+                        '  topic="'+thing.informations.publishOn+'"\n',
+                        '  client="'+thing.id+'">\n',
+                        '</mqtt-graph>'
+                    ].join("");
+                }
+
+                if(thing.informations.kind=="gauge") {
+                    var component = [
+                        '<mqtt-gauge\n',
+                        '  titleGraph="'+thing.informations.remark+' ('+thing.informations.unit+')"\n',
+                        '  topic="'+thing.informations.publishOn+'"\n',
+                        '  client="'+thing.id+'">\n',
+                        '</mqtt-gauge>'
+                    ].join("");
+                    //$(".empty").first().removeClass("empty").addClass("notEmpty").append(component)
+                }
+                //informations.kind
+                if($('[client="'+thing.id+'"]').length==0) {
+                    $(".empty").first().removeClass("empty").addClass("notEmpty").append(component)
+                } else {
+                    $('[client="'+thing.id+'"]').parent().removeClass("notEmpty").addClass("empty").html("");
+                }
+            }
+        });
+
+    </script>
+
+</polymer-element>

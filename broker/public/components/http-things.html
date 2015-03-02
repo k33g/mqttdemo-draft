@@ -1,0 +1,47 @@
+<!--
+  http-things component is available under the terms of the MIT-License.
+  Copyright 2015-2016, Philippe Charrière & Laurent Huet
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+
+
+<polymer-element name="http-things" attributes="urlData, delay">
+
+    <template>
+        <core-ajax
+                id="ajax"
+                auto
+                url="{{urlData}}"
+                handleAs="json"
+                on-core-response="{{handleResponse}}">
+        </core-ajax>
+
+        <ul>
+            <template repeat="{{thing in things}}">
+                <li>{{thing.id}} : {{thing.status}} {{thing.informations.kind}} {{thing.informations.unit}} {{thing.informations.remark}} {{thing.subscriptions}} {{thing.informations.publishOn}}</li>
+            </template>
+        </ul>
+
+
+    </template>
+
+
+    <script>
+
+        Polymer("http-things", {
+
+            ready: function() {
+                var that = this;
+                //console.log(this.delay)
+                setInterval(function(){ that.$.ajax.go(); }, this.delay);
+            },
+            handleResponse: function(e, data) {
+                this.things = data.response;
+                //console.log(this.applicationData)
+            }
+        });
+
+    </script>
+
+</polymer-element>

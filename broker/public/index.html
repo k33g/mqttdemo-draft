@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="materialize/css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/epoch/epoch.min.css">
+    <!--
+    <link rel="stylesheet" type="text/css" href="bower_components/handsontable/dist/handsontable.full.min.css">
+    -->
+
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script>
+    <script src="bower_components/epoch/epoch.min.js"></script>
+    <script src="bower_components/socket.io-client/socket.io.js"></script>
+    <!--
+    <script src="bower_components/handsontable/dist/handsontable.full.min.js"></script>
+    -->
+
+    <!-- Polymer dependencies -->
+    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+
+    <!-- core-elements dependencies -->
+    <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+    <link rel="import" href="bower_components/core-menu/core-menu.html">
+    <link rel="import" href="bower_components/core-item/core-item.html">
+    <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
+    <link rel="import" href="bower_components/core-scaffold/core-scaffold.html">
+    <link rel="import" href="bower_components/core-icons/core-icons.html">
+
+    <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+
+
+    <!-- components -->
+    <link rel="import" href="components/mqtt-socket-io.html">
+    <link rel="import" href="components/mqtt-graph.html">
+    <link rel="import" href="components/mqtt-gauge.html">
+    <link rel="import" href="components/mqtt-text.html">
+    <link rel="import" href="components/http-things.html">
+    <link rel="import" href="components/http-things-grid.html">
+
+
+</head>
+<body>
+
+
+<core-scaffold drawerWidth="500px">
+
+    <core-header-panel navigation flex mode="seamed" >
+        <core-toolbar>
+            Things (select/deselect things to display/hide)
+        </core-toolbar>
+
+        <!-- Left side menu -->
+        <core-menu>
+            <http-things-grid
+                    urlData="/things"
+                    delay=2000 status="connected">
+            </http-things-grid>
+        </core-menu>
+
+    </core-header-panel>
+
+      <span tool layout horizontal flex>
+        <span flex>MQTT Demo</span>
+          <mqtt-socket-io
+                  protocol="http"
+                  host="auto"
+                  port=5000>
+          </mqtt-socket-io>
+      </span>
+
+    <!-- content -->
+
+    <div class="container">
+
+
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+        <div class="row empty">
+        </div>
+    </div>
+
+
+
+</core-scaffold>
+
+<!--
+<http-things urlData="/things" delay=2000></http-things>
+-->
+
+</body>
+</html>

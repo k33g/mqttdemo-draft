@@ -1,0 +1,61 @@
+<!--
+  mqtt-gauge component is available under the terms of the MIT-License.
+  Copyright 2015-2016, Philippe Charrière & Laurent Huet
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+
+
+<polymer-element name="mqtt-gauge" attributes="titleGraph, topic, client">
+    <!--
+    <link rel="stylesheet" href="../bower_components/epoch/epoch.min.css">
+    -->
+
+    <template>
+        <link rel="stylesheet" type="text/css" href="../materialize/css/materialize.css">
+        <link rel="stylesheet" href="../bower_components/epoch/epoch.min.css">
+
+        <core-signals on-core-signal-mqtt-data="{{mqttData}}"></core-signals>
+
+        <div class="card-panel white">
+            <span class="card-title grey-text"><h5>{{titleGraph}}</h5></span>
+            <hr>
+            <span class="grey-text">
+                <div class="card-reveal">
+                    <span>topic: {{topic}} | client: {{client}} | {{informations}}</span>
+                    <div id="graph" class="epoch gauge-small"></div>
+                </div>
+            </span>
+        </div>
+
+        <!--
+        <div>
+            <h5>{{titleGraph}}</h5>
+            <span>topic: {{topic}} | client: {{client}} | {{informations}}</span>
+            <div id="graph" class="epoch gauge-small"></div>
+
+        </div>
+        -->
+    </template>
+
+
+    <script>
+
+        Polymer("mqtt-gauge", {
+            myGauge: null,
+            ready: function() {},
+            domReady: function() {
+                this.myGauge = $(this.$.graph).epoch({ type: 'time.gauge', value: 0.0 });
+            },
+            mqttData: function(e, data, sender) {
+                if(data.topic == this.topic && data.client == this.client) {
+                    this.myGauge.update(JSON.parse(data.message).value);
+                    this.informations = data.message;
+                }
+            }
+
+        });
+
+    </script>
+
+</polymer-element>
