@@ -1,6 +1,5 @@
 /**
- * sensor-gauge
- * broker is available under the terms of the MIT-License.
+ * sensor-gauge is available under the terms of the MIT-License.
  * Copyright 2015-2016, Philippe Charrière & Laurent Huet
  */
 var Cylon = require('cylon');

@@ -1,8 +1,7 @@
 // Model of Thing
 
 /**
- * thing-model
- * broker is available under the terms of the MIT-License.
+ * thing-model is available under the terms of the MIT-License.
  * Copyright 2015-2016, Philippe Charrière & Laurent Huet
  */
 

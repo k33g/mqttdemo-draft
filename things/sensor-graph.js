@@ -1,6 +1,5 @@
 /**
- * sensor-graph
- * broker is available under the terms of the MIT-License.
+ * sensor-graph is available under the terms of the MIT-License.
  * Copyright 2015-2016, Philippe Charrière & Laurent Huet
  */
 var Cylon = require('cylon');
